@@ -1,54 +1,40 @@
 pipeline {
     agent any
+    
     tools {
+        jdk 'JDK-21'
         maven 'Maven-3.9'
-        jdk   'JDK-21'
     }
+    
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
-                echo "Build #${env.BUILD_NUMBER} | Branche : ${env.BRANCH_NAME}"
+                git url: 'https://github.com/celmarka/student-api.git', branch: 'main'
             }
         }
-        stage('Build') {
+        
+        stage('Build & Test') {
             steps {
-                bat 'mvn clean package -DskipTests'
+                sh 'mvn clean verify'
             }
         }
-        stage('Tests Unitaires') {
+        
+        stage('Publish Test Report') {
             steps {
-                bat 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-        stage('Couverture') {
-            steps {
-                bat 'mvn verify'
-            }
-            post {
-                always {
-                    jacoco(
-                        execPattern:   'target/*.exec',
-                        classPattern:  'target/classes',
-                        sourcePattern: 'src/main/java'
-                    )
-                }
-            }
-        }
-        stage('Archivage') {
-            steps {
-                archiveArtifacts artifacts:    'target/*.jar',
-                                 fingerprint: true
+                junit 'target/surefire-reports/*.xml'
             }
         }
     }
+    
     post {
-        success { echo 'Pipeline reussi avec succes !'         }
-        failure { echo 'Pipeline echoue -- consultez les logs.' }
+        always {
+            echo 'Pipeline terminée'
+        }
+        success {
+            echo 'Pipeline réussie ! ✅'
+        }
+        failure {
+            echo 'Pipeline échouée -- consultez les logs. ❌'
+        }
     }
 }
