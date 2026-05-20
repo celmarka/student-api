@@ -31,10 +31,10 @@ pipeline {
             echo 'Pipeline terminée'
         }
         success {
-            echo 'Pipeline réussie ! ✅'
+            echo '✅ Pipeline réussie !'
         }
         failure {
-            echo 'Pipeline échouée -- consultez les logs. ❌'
+            echo '❌ Pipeline échouée -- consultez les logs.'
         }
     }
 }
