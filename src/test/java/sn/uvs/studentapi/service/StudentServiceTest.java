@@ -29,8 +29,8 @@ class StudentServiceTest {
         when(repository.findAll()).thenReturn(List.of(s));
 
         List<Student> result = service.findAll();
-// Modifier 1 pour 10
-        assertEquals(10, result.size());
+
+        assertEquals(1, result.size());
         verify(repository).findAll();
     }
 
@@ -43,8 +43,7 @@ class StudentServiceTest {
         Optional<Student> result = service.findById(1L);
 
         assertTrue(result.isPresent());
-        // assertEquals("Awa", result.get().getPrenom());
-        assertEquals(false, result.get().isDeleted());
+        assertEquals("Awa", result.get().getPrenom());
     }
 
     @Test
