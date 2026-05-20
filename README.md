@@ -28,7 +28,7 @@ mvn clean test
 mvn verify
 ```
 
-ngrok http 8080
+command pour lancer ngrok : ngrok http 8080
 
 
 ## Endpoints
