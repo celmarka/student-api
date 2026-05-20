@@ -28,6 +28,9 @@ mvn clean test
 mvn verify
 ```
 
+ngrok http 8080
+
+
 ## Endpoints
 
 | Méthode | URL                    | Description              |
